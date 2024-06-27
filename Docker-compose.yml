@@ -1,0 +1,32 @@
+version: "3"
+services:
+  pythonweb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_ENV=development
+  prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5001"
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_ENV=production
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    command: ["pytest", "--cov=."]
+    environment:
+      - FLASK_ENV=testing
